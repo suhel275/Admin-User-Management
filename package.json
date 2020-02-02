@@ -1,5 +1,5 @@
 {
-  "name": "Admin-User Management",
+  "name": "AdminUserManagement",
   "version": "1.0.0",
   "description": "Contacts management app",
   "main": "server.js",
