@@ -1,4 +1,5 @@
 export const GET_CONTACTS = 'GET_CONTACTS';
+export const GET_USERS = 'GET_USERS';
 export const ADD_CONTACT = 'ADD_CONTACT';
 export const DELETE_CONTACT = 'DELETE_CONTACT';
 export const SET_CURRENT = 'SET_CURRENT';
@@ -13,6 +14,7 @@ export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const USER_LOADED = 'USER_LOADED';
+export const ADMIN_LOADED = 'ADMIN_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';

@@ -2,6 +2,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
+  ADMIN_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -17,6 +18,13 @@ export default (state, action) => {
         isAuthenticated: true,
         loading: false,
         user: action.payload
+      };
+    case ADMIN_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        admin: action.payload
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:

@@ -31,10 +31,13 @@ const Navbar = ({ title, icon }) => {
   const guestLinks = (
     <Fragment>
       <li>
-        <Link to='/register'>Register</Link>
+        <Link to='/loginAdmin'>Login As Admin</Link>
       </li>
       <li>
-        <Link to='/login'>Login</Link>
+        <Link to='/register'>Register As User</Link>
+      </li>
+      <li>
+        <Link to='/login'>Login As User</Link>
       </li>
     </Fragment>
   );
@@ -55,7 +58,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
-  title: 'Smartify Contacts',
+  title: 'Admin-User Management',
   icon: 'fas fa-id-card-alt'
 };
 

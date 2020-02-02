@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const auth = require('../middleware/auth');
 
-// @route   GET api/auth
+// @route   GET api/authUser
 // @desc    get logged in user
 // @access  Private
 router.get('/', auth, async (req, res) => {
@@ -19,7 +19,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   POST api/auth
+// @route   POST api/authUser
 // @desc    Auth user and get token
 // @access  Public
 router.post(
@@ -41,6 +41,8 @@ router.post(
 
       if (!user) {
         return res.status(400).json({ msg: 'Invalid Credentials' });
+      } else if (user && user.status === 'blocked') {
+        return res.status(400).json({ msg: 'User is blocked' });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);

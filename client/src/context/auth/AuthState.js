@@ -7,6 +7,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
+  ADMIN_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -20,6 +21,7 @@ const AuthState = props => {
     isAuthenticated: null,
     loading: true,
     user: null,
+    admin: null,
     error: null
   };
 
@@ -30,10 +32,26 @@ const AuthState = props => {
     setAuthToken(localStorage.token);
 
     try {
-      const res = await axios.get('/api/auth');
+      const res = await axios.get('/api/authUser');
 
       dispatch({
         type: USER_LOADED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
+
+  // Load Admin
+  const loadAdmin = async () => {
+    setAuthToken(localStorage.token);
+
+    try {
+      const res = await axios.get('/api/authAdmin');
+
+      dispatch({
+        type: ADMIN_LOADED,
         payload: res.data
       });
     } catch (err) {
@@ -75,7 +93,7 @@ const AuthState = props => {
     };
 
     try {
-      const res = await axios.post('/api/auth', formData, config);
+      const res = await axios.post('/api/authUser', formData, config);
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -83,6 +101,31 @@ const AuthState = props => {
       });
 
       loadUser();
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.msg
+      });
+    }
+  };
+
+  // Login Admin
+  const loginAdmin = async formData => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post('/api/authAdmin', formData, config);
+
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data
+      });
+
+      loadAdmin();
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
@@ -108,6 +151,7 @@ const AuthState = props => {
         register,
         loadUser,
         login,
+        loginAdmin,
         logout,
         clearErrors
       }}

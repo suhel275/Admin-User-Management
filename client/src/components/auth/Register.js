@@ -14,7 +14,7 @@ const Register = props => {
       props.history.push('/');
     }
 
-    if (error === 'User already exists') {
+    if (error === 'User already exists' || error === 'User is blocked') {
       setAlert(error, 'danger');
       clearErrors();
     }
@@ -50,7 +50,7 @@ const Register = props => {
   return (
     <div className='form-container'>
       <h1>
-        Account <span className='text-primary'>Register</span>
+        Account Register<span className='text-primary'> As User</span>
       </h1>
       <form onSubmit={onSubmit}>
         <div className='form-group'>

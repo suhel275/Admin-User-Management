@@ -2,16 +2,17 @@ import React, { useState, useContext, useEffect } from 'react';
 import AuthContext from '../../context/auth/authContext';
 import AlertContext from '../../context/alert/alertContext';
 
-const Login = props => {
+const LoginAdmin = props => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
-  const { login, error, clearErrors, isAuthenticated } = authContext;
+  const { loginAdmin, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push('/');
+      console.log('isAuthenticated after logged in = ' + isAuthenticated);
+      props.history.push('/homeAdmin');
     }
 
     if (error === 'Invalid Credentials' || error === 'User is blocked') {
@@ -21,21 +22,21 @@ const Login = props => {
     // eslint-disable-next-line
   }, [error, isAuthenticated, props.history]);
 
-  const [user, setUser] = useState({
+  const [admin, setAdmin] = useState({
     email: '',
     password: ''
   });
 
-  const { email, password } = user;
+  const { email, password } = admin;
 
-  const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = e => setAdmin({ ...admin, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
     if (email === '' || password === '') {
       setAlert('Please fill in all fields', 'danger');
     } else {
-      login({
+      loginAdmin({
         email,
         password
       });
@@ -45,7 +46,7 @@ const Login = props => {
   return (
     <div className='form-container'>
       <h1>
-        Account Login<span className='text-primary'> As User</span>
+        Account Login<span className='text-primary'> As Admin</span>
       </h1>
       <form onSubmit={onSubmit}>
         <div className='form-group'>
@@ -80,4 +81,4 @@ const Login = props => {
   );
 };
 
-export default Login;
+export default LoginAdmin;

@@ -5,6 +5,7 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const auth = require('../middleware/auth');
 
 // @route   POST api/users
 // @desc    Register a user
@@ -30,14 +31,17 @@ router.post(
     try {
       let user = await User.findOne({ email });
 
-      if (user) {
+      if (user && user.status === 'active') {
         return res.status(400).json({ msg: 'User already exists' });
+      } else if (user && user.status === 'blocked') {
+        return res.status(400).json({ msg: 'User is blocked' });
       }
 
       user = new User({
         name,
         email,
-        password
+        password,
+        status: 'active'
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -66,5 +70,18 @@ router.post(
     }
   }
 );
+
+// @route   GET api/users
+// @desc    Get all users
+// @access  Private
+router.get('/', auth, async (req, res) => {
+  try {
+    const contacts = await User.find();
+    res.json(contacts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;
